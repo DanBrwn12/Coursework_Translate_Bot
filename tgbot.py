@@ -66,7 +66,7 @@ class MyStates(StatesGroup):
 
 @bot.message_handler(commands=["cards", "start"])
 def create_cards(message):
-    user, is_new = db.get_or_create_user(message.from_user.id)
+    user_id, is_new = db.get_or_create_user(message.from_user.id)
     if is_new:
         bot.send_message(
             message.chat.id,
@@ -75,7 +75,7 @@ def create_cards(message):
             "Для вызова справки по использованию бота напиши команду /help",
         )
 
-    word = db.get_random_word(user_id=user.id)
+    word = db.get_random_word(user_id=user_id)
     target_word = word.target_word
     translate = word.translate_word
     others = db.get_random_words(exclude_word=target_word, limit=3)

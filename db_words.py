@@ -42,12 +42,12 @@ class DataBase:
         try:
             user = session.query(User).filter_by(telegram_id=telegram_id).first()
             if user:
-                return user, False
+                return user.id, False
             else:
                 user = User(telegram_id=telegram_id)
                 session.add(user)
                 session.commit()
-                return user, True
+                return user.id, True
         finally:
             session.close()
 
